@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class playerController : MonoBehaviour
 {
     private float horizontal;
     private float speed = 8f;
@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -26,12 +26,24 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            animator.SetTrigger("Jump");
         }
+        
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            
         }
-        
+        if (IsGrounded() && animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+        {
+            animator.ResetTrigger("Jump");
+            animator.Play("Idle");
+        }
+        //Attack
+        if (Input.GetMouseButtonDown(0))
+        {
+            animator.SetTrigger("Attack");
+        }
         Flip();
     }
 
@@ -46,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Flip()
     {
-       if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
