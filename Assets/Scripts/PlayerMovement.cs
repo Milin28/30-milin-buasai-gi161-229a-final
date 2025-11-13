@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovemement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private float speed = 8f;
@@ -10,6 +10,7 @@ public class PlayerMovemement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,6 +21,8 @@ public class PlayerMovemement : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
@@ -28,6 +31,7 @@ public class PlayerMovemement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
+        
         Flip();
     }
 

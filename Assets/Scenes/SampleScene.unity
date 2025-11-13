@@ -218,9 +218,9 @@ GameObject:
   - component: {fileID: 281175126}
   - component: {fileID: 281175125}
   - component: {fileID: 281175124}
-  - component: {fileID: 281175128}
   - component: {fileID: 281175129}
   - component: {fileID: 281175130}
+  - component: {fileID: 281175131}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -258,7 +258,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -289,7 +289,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 4
   m_Material: {fileID: 6200000, guid: 84a271d4b0c2e524da557d56976dd1cc, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -372,23 +372,6 @@ Transform:
   - {fileID: 1402090840}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &281175128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 281175122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed226a9cc16243243827f52cecc900cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 281175125}
-  groundCheck: {fileID: 1402090840}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!95 &281175129
 Animator:
   serializedVersion: 7
@@ -448,6 +431,24 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.32999998, y: 0.31999996}
   m_Direction: 0
+--- !u!114 &281175131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281175122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d91630eeaac512f4bb68fe565fdd2163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 281175125}
+  groundCheck: {fileID: 1402090840}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  animator: {fileID: 281175129}
 --- !u!1 &375263432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,7 +1449,7 @@ Transform:
   m_GameObject: {fileID: 1402090839}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.167, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
