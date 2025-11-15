@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+public class PlayerController : Character
 {
     private float horizontal;
     private float speed = 8f;
@@ -11,51 +11,53 @@ public class playerController : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public override void Start()
     {
-
+        base.Start();
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        
+
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
             animator.SetTrigger("Jump");
         }
-        
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+
+        if (Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-            
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
+
         if (IsGrounded() && animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
         {
             animator.ResetTrigger("Jump");
             animator.Play("Idle");
         }
-        //Attack
+
+        // Attack
         if (Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("Attack");
         }
+
         Flip();
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-
+        rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
     }
+
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
+
     private void Flip()
     {
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
