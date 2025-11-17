@@ -1,70 +1,58 @@
+
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : Character
 {
-    [Header("Player HP Settings")]
-    public int maxHealth = 100;
-    public int currentHealth;
+    [field: SerializeField] public GameObject Bullet { get; set; }
+    [field: SerializeField] public Transform ShootPoint { get; set; }
+    [field: SerializeField] public float ReloadTime { get; set; }
+    [field: SerializeField] public float WaitTime { get; set; }
 
-    [Header("UI")]
-    public Slider healthBar;
-
-    private Animator animator;
-    private bool isDead = false;
-
-    public override void Start()
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-        base.Start();
+        base.Intialize(100);
+        ReloadTime = 1.0f;
+        WaitTime = 0.0f;
+    }
+    public void OnHitWith(Enemy enemy)
+    {
+        TakeDamage(enemy.DamageHit);
+        //IsDead();
+    }
+    private void FixedUpdate()
+    {
+        WaitTime += Time.fixedDeltaTime;
+        //Debug.Log("time :" + Time.fixedDeltaTime);
+    }
 
-        currentHealth = maxHealth;
-        animator = GetComponent<Animator>();
-
-        if (healthBar != null)
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        if (enemy != null)
         {
-            healthBar.maxValue = maxHealth;
-            healthBar.value = currentHealth;
+            Debug.Log($"{this.name} Hit with {enemy.name}!");
+            OnHitWith(enemy);
         }
+
+    }
+    // Update is called once per frame
+    private void Update()
+    {
+        //Shoot();
     }
 
-    public override void TakeDamage(int damage)
+   /* public void Shoot()
     {
-        if (isDead) return;
-
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        if (healthBar != null)
-            healthBar.value = currentHealth;
-
-        animator.SetTrigger("Hurt");
-
-        if (currentHealth <= 0)
+        if (Input.GetButtonDown("Fire1") && WaitTime >= ReloadTime)
         {
-            Die();
+            var bullet = Instantiate(Bullet, ShootPoint.position, Quaternion.identity);
+            Banana banana = bullet.GetComponent<Banana>();
+            if (banana != null)
+                banana.InitWeapon(20, this);
+            WaitTime = 0.0f;
+
+
         }
-    }
-
-    public override void Die()
-    {
-        if (isDead) return;
-
-        isDead = true;
-        animator.SetTrigger("Die");
-
-        GetComponent<PlayerController>().enabled = false;
-
-        Debug.Log("Player Died!");
-    }
-
-    public void Heal(int amount)
-    {
-        if (isDead) return;
-
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        if (healthBar != null)
-            healthBar.value = currentHealth;
-    }
+    }*/
 }
