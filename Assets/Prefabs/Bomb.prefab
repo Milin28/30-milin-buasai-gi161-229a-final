@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2546926219012640708}
   - component: {fileID: 5729299339407995218}
   - component: {fileID: 4137978680940930801}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.6928456, y: -2.0981417, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.7324, y: 2.7324, z: 2.7324}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

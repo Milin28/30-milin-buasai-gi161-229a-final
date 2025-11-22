@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 2709923257342701627}
   - component: {fileID: 292047855428506764}
   - component: {fileID: 5908573208845381867}
+  - component: {fileID: 7867634204604979266}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -203,17 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0baf06f4784eaf0449acf886ab873d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
-  currentHP: 0
-  moveSpeed: 2
-  rb: {fileID: 5908573208845381867}
-  groundCheck: {fileID: 5170706679600697034}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  leftPoint: {fileID: 0}
-  rightPoint: {fileID: 0}
-  animator: {fileID: 2651581730537152998}
+  maxHealth: 100
+  velocity: {x: 0, y: 0}
+  MovePoint: []
 --- !u!50 &5908573208845381867
 Rigidbody2D:
   serializedVersion: 5
@@ -241,3 +234,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &7867634204604979266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782594131020838576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1770b1ed362148347b73636948d1a9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarPrefab: {fileID: 7114591721074102124, guid: 61c966ea7c895fa4bbe9ebb80ff25896, type: 3}

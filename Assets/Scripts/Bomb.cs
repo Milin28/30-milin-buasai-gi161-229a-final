@@ -4,7 +4,7 @@ public class Bomb : MonoBehaviour
 {
     public int damage = 5;        // ระเบิดทำดาเมจเท่าไหร่
     public float speed = 5f;       // ความเร็วที่ลอยไป
-    public float lifeTime = 3f;    // ระยะเวลาก่อนทำลายตัวเอง
+    public float lifeTime = 1f;    // ระยะเวลาก่อนทำลายตัวเอง
 
     private Vector2 direction;
 
