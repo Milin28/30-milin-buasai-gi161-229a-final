@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Character
 {
@@ -7,6 +8,7 @@ public class Player : Character
     [field: SerializeField] public Transform ShootPoint { get; set; }
     [field: SerializeField] public float ReloadTime { get; set; }
     [field: SerializeField] public float WaitTime { get; set; }
+    public Text WinText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
