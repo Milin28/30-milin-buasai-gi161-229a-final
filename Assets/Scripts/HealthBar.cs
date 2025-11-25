@@ -4,13 +4,15 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [Header("Health Bar UI")]
+    
+    
     [SerializeField] private Slider slider;
-    [SerializeField] private Vector3 worldOffset = new Vector3(0, 1.2f, 0); // ตำแหน่งเหนือหัว
+    [SerializeField] private Vector3 worldOffset = new Vector3(0, 1.2f, 0); 
 
-    private Character target; // ตัวละครที่ HealthBar นี้ดูแล
-
-    //  ฟังก์ชันให้ Manager หรือ Character เรียกใช้
-    public void SetTarget(Character character)
+    private Character target; 
+    public Transform headPoint;
+    
+    public void SetTarget(Character character, Transform head)
     {
         if (target != null)
         {
@@ -18,6 +20,7 @@ public class HealthBar : MonoBehaviour
         }
 
         target = character;
+        headPoint = head;
 
         if (target != null)
         {
@@ -26,7 +29,7 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    // เมื่อค่า HP เปลี่ยน
+    
     private void OnHealthChanged(int current)
     {
         UpdateSlider(current, target.MaxHealth);
@@ -38,7 +41,7 @@ public class HealthBar : MonoBehaviour
             slider.value = (float)current / max;
     }
 
-    // ให้แถบตามตำแหน่งตัวละคร
+    
     private void LateUpdate()
     {
         if (target == null) return;

@@ -4,6 +4,11 @@ public class Mushroom : Enemy
 {
     [SerializeField] public Vector2 velocity;
     public Transform[] MovePoint;
+    public Vector3 offset;
+    public float attackRange = 1.5f; // ระยะโจมตี
+    public float attackCooldown = 1.0f; // เวลาระหว่างการโจมตี
+    private float lastAttackTime = 0f;  // เวลาครั้งล่าสุดที่โจมตี
+
     void Start()
     {
         base.Intialize(20);
@@ -32,6 +37,38 @@ public class Mushroom : Enemy
         {
             Flip();
         }
+        // ตรวจสอบระยะห่างจาก Player และโจมตีหากอยู่ในระยะ
+        if (IsPlayerInRange())
+        {
+            Attack();
+        }
+    }
+    public void Attack()
+    {
+        // ตรวจสอบเวลาระหว่างการโจมตี
+        if (Time.time - lastAttackTime >= attackCooldown)
+        {
+            lastAttackTime = Time.time;
+
+            // หา Player และโจมตี
+            Player player = FindObjectOfType<Player>(); // หา Player ใน scene
+            if (player != null)
+            {
+                Debug.Log("Mushroom attacking the player!");
+                player.TakeDamage(DamageHit); // ลดพลังชีวิตของ Player
+            }
+        }
+    }
+    // ตรวจสอบว่าผู้เล่นอยู่ในระยะโจมตีหรือไม่
+    private bool IsPlayerInRange()
+    {
+        Player player = FindObjectOfType<Player>(); // หา Player ใน scene
+        if (player != null)
+        {
+            float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+            return distanceToPlayer <= attackRange;
+        }
+        return false;
     }
     //flip ant to the opposite direction
     public void Flip()

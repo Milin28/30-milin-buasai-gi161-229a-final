@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public int damage = 5;        // ระเบิดทำดาเมจเท่าไหร่
-    public float speed = 5f;       // ความเร็วที่ลอยไป
-    public float lifeTime = 1f;    // ระยะเวลาก่อนทำลายตัวเอง
+    public int damage = 5;        
+    public float speed = 5f;      
+    public float lifeTime = 1f;    
 
     private Vector2 direction;
 
-    // ให้ player เรียกใช้เมื่อโยน
+   
     public void Launch(Vector2 dir)
     {
         direction = dir.normalized;
@@ -22,15 +22,14 @@ public class Bomb : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // ถ้าเจอ Enemy
+        
         Enemy enemy = collision.GetComponent<Enemy>();
 
         if (enemy != null)
         {
             Debug.Log("Hit enemy, damage applied!");
-            enemy.TakeDamage(damage); // ทำดาเมจ
-            Destroy(gameObject);      // ลบระเบิดทันที
+            enemy.TakeDamage(damage);
+            Destroy(gameObject);
         }
-
     }
 }

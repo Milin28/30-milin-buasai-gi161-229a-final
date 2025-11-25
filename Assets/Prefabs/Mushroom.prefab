@@ -207,6 +207,10 @@ MonoBehaviour:
   maxHealth: 100
   velocity: {x: 0, y: 0}
   MovePoint: []
+  target: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  attackRange: 1.5
+  attackCooldown: 1
 --- !u!50 &5908573208845381867
 Rigidbody2D:
   serializedVersion: 5
@@ -246,4 +250,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1770b1ed362148347b73636948d1a9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarPrefab: {fileID: 7114591721074102124, guid: 61c966ea7c895fa4bbe9ebb80ff25896, type: 3}
+  healthBarPrefab: {fileID: 0}

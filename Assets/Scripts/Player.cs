@@ -1,6 +1,8 @@
-
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : Character
 {
@@ -8,7 +10,8 @@ public class Player : Character
     [field: SerializeField] public Transform ShootPoint { get; set; }
     [field: SerializeField] public float ReloadTime { get; set; }
     [field: SerializeField] public float WaitTime { get; set; }
-    public Text WinText;
+   
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,7 +31,7 @@ public class Player : Character
         //Debug.Log("time :" + Time.fixedDeltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D other )
     {
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy != null)
@@ -38,23 +41,24 @@ public class Player : Character
         }
 
     }
+    protected override void OnDeath()
+    {
+        base.OnDeath(); // ลบ GameObject ทันที
+        GameOver();
+    }
+    private void GameOver()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     // Update is called once per frame
     private void Update()
     {
-        //Shoot();
+       /* if (IsDead())
+        {
+            GameOver(); // เรียกฟังก์ชัน GameOver
+        }*/
     }
 
-   /* public void Shoot()
-    {
-        if (Input.GetButtonDown("Fire1") && WaitTime >= ReloadTime)
-        {
-            var bullet = Instantiate(Bullet, ShootPoint.position, Quaternion.identity);
-            Banana banana = bullet.GetComponent<Banana>();
-            if (banana != null)
-                banana.InitWeapon(20, this);
-            WaitTime = 0.0f;
-
-
-        }
-    }*/
+   
 }

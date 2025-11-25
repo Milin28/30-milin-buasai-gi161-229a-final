@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class Character : MonoBehaviour
 {
-    public event Action<int> OnHealthChanged; // event HealthBar
+    // event HealthBar
+    public event Action<int> OnHealthChanged; 
 
     // attribute
     [SerializeField] private int maxHealth = 100;
@@ -21,19 +23,19 @@ public abstract class Character : MonoBehaviour
     }
     protected Animator anim;
     protected Rigidbody2D rb;
-
+    protected virtual void CacheComponents()
+    {
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+    }
     //method
     public void Intialize(int startHealth)
     {
         maxHealth = startHealth;
         Health = startHealth;
-        anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+        CacheComponents();
         Debug.Log($"{this.name} initialized with Health: {Health}");
-        /*Health = starHealth;
-        Debug.Log($"{this.name} initial Health: {Health}");
-        anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();*/
+        
     }
 
     // method
@@ -42,28 +44,31 @@ public abstract class Character : MonoBehaviour
 
         Health -= damage;
         Health = Mathf.Clamp(Health, 0, MaxHealth);
+        
         Debug.Log($"{this.name} took damage {damage}. Current Health: {Health}");
-        OnHealthChanged?.Invoke(Health);
-        IsDead();
+        if (IsDead())
+        {
+            Debug.Log($"{this.name} is dead!");
+            OnDeath();
+        }
+        /*OnHealthChanged?.Invoke(Health);
+        IsDead();*/
     }
-
+    protected virtual void OnDeath()
+    {
+        Destroy(gameObject);
+    }
     public bool IsDead()
     {
-        if (Health <= 0)
-        {
-            Destroy(this.gameObject);
-            Debug.Log($"{this.name} is dead. and destroyed!");
-            return true;
-        }
-        else
-            return false;
+        return Health <= 0;
+       
     }
-
-
-    void Start()
+    public bool TryGetEnemyFromCollision(Collider2D collision, out Enemy enemy)
     {
-
+        enemy = collision.GetComponent<Enemy>();
+        return enemy != null;
     }
+
 
 
 }
