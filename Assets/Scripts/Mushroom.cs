@@ -8,11 +8,14 @@ public class Mushroom : Enemy
     public float attackRange = 1.5f; // ระยะโจมตี
     public float attackCooldown = 1.0f; // เวลาระหว่างการโจมตี
     private float lastAttackTime = 0f;  // เวลาครั้งล่าสุดที่โจมตี
-
+    private Animator animator; // เพิ่ม Animator
+    private bool isAttacking = false; // สถานะการโจมตี
     void Start()
     {
         base.Intialize(20);
         DamageHit = 20;
+        // Get the Animator component
+        animator = GetComponent<Animator>();
 
         if (MovePoint.Length >= 2)
         {
@@ -42,6 +45,7 @@ public class Mushroom : Enemy
         {
             Attack();
         }
+        
     }
     public void Attack()
     {
@@ -55,6 +59,11 @@ public class Mushroom : Enemy
             if (player != null)
             {
                 Debug.Log("Mushroom attacking the player!");
+                // เล่นแอนิเมชันโจมตี
+                if (animator != null)
+                {
+                    animator.SetTrigger("Attack"); // เรียก trigger "Attack" เพื่อเล่นท่าโจมตี
+                }
                 player.TakeDamage(DamageHit); // ลดพลังชีวิตของ Player
             }
         }
