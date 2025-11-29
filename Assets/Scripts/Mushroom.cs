@@ -30,6 +30,7 @@ public class Mushroom : Enemy
     {
         //move from current position
         rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+
         //move left
         if (velocity.x < 0 && rb.position.x <= MovePoint[0].position.x)
         {
@@ -45,7 +46,15 @@ public class Mushroom : Enemy
         {
             Attack();
         }
-        
+        else if (!isAttacking) // ถ้าไม่ได้โจมตี ให้กลับไปเดิน
+        {
+            // Set walking animation
+            if (animator != null)
+            {
+                animator.SetBool("isWalking", true); // Set to walking
+            }
+        }
+
     }
     public void Attack()
     {
@@ -63,7 +72,10 @@ public class Mushroom : Enemy
                 if (animator != null)
                 {
                     animator.SetTrigger("Attack"); // เรียก trigger "Attack" เพื่อเล่นท่าโจมตี
+                    animator.SetBool("isWalking", false); // หยุดเดินระหว่างโจมตี
                 }
+
+                isAttacking = true;
                 player.TakeDamage(DamageHit); // ลดพลังชีวิตของ Player
             }
         }

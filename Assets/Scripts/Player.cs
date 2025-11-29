@@ -10,8 +10,9 @@ public class Player : Character
     [field: SerializeField] public Transform ShootPoint { get; set; }
     [field: SerializeField] public float ReloadTime { get; set; }
     [field: SerializeField] public float WaitTime { get; set; }
-   
-    
+    public AudioSource audioSource;
+    public AudioClip coinSound;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,6 +20,7 @@ public class Player : Character
         base.Intialize(100);
         ReloadTime = 1.0f;
         WaitTime = 0.0f;
+        audioSource = GetComponent<AudioSource>();
     }
     public void OnHitWith(Enemy enemy)
     {
@@ -38,6 +40,7 @@ public class Player : Character
         {
             Debug.Log($"{this.name} Hit with {enemy.name}!");
             OnHitWith(enemy);
+            
         }
 
     }
