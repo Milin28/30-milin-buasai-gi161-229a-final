@@ -238,8 +238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d03af98f70269c458d58a1d88e9fe41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
-  currentHP: 0
+  speed: 8
+  jumpingPower: 16
+  bombPrefab: {fileID: 6173831700748792947, guid: 4fbe60d95205ca7458da193946f5efab, type: 3}
+  throwPoint: {fileID: 0}
   rb: {fileID: 1529955772894681994}
   groundCheck: {fileID: 6422714632900648791}
   groundLayer:
@@ -258,11 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65bd3dc1164e7474599f99c4e620266d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
-  currentHP: 0
   maxHealth: 100
-  currentHealth: 0
-  healthBar: {fileID: 0}
 --- !u!1 &7231702699995539600
 GameObject:
   m_ObjectHideFlags: 0

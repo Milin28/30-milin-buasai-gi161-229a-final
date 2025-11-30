@@ -1,10 +1,10 @@
-﻿using UnityEditor.Overlays;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Enemy : Character
 {
     public int DamageHit { get; protected set; }
-    public abstract void Behavior();
+
+    [Header("UI")]
     public Transform headPoint;
     public HealthBar healthBarPrefab;
 
@@ -12,7 +12,7 @@ public abstract class Enemy : Character
 
     protected virtual void Start()
     {
-        // สร้าง HealthBar บน Canvas
+        // init health (ถ้าอยาก override ค่อยไปทำใน subclass)
         if (healthBarPrefab != null)
         {
             Canvas canvas = FindObjectOfType<Canvas>();
@@ -20,12 +20,19 @@ public abstract class Enemy : Character
             hb.SetTarget(this, headPoint);
         }
     }
-    public void Die()
-    {
-        // เรียกอนิเมชัน FadeOut
-        //animator.SetTrigger("Die"); // สมมติว่า "Die" คือ trigger ที่เรียกอนิเมชัน FadeOut
 
-        // รอให้อนิเมชัน FadeOut เล่นจนจบ (เวลาอนิเมชันนี้เป็นเวลาเท่าไหร่)
-        Destroy(gameObject); // ทำลายตัว Mushroom หลังจากอนิเมชันเล่นเสร็จ (1 วินาที)
+    public abstract void Behavior();  // <-- polymorphism ตรงนี้
+
+    protected override void OnDeath()
+    {
+        if (hb != null)
+            Destroy(hb.gameObject);
+
+        base.OnDeath();
+    }
+
+    private void FixedUpdate()
+    {
+        Behavior();     // ทุก enemy จะเรียก Behavior ของตัวเอง
     }
 }

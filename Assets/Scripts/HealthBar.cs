@@ -7,7 +7,7 @@ public class HealthBar : MonoBehaviour
     
     
     [SerializeField] private Slider slider;
-    [SerializeField] private Vector3 worldOffset = new Vector3(0, 1.2f, 0); 
+    [SerializeField] private Vector3 worldOffset = new Vector3(0, 0.8f, 0); 
 
     private Character target; 
     public Transform headPoint;

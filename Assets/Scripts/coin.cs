@@ -8,7 +8,7 @@ public class coin : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            CoinManager.Instance.changeCoins(value);   // เพิ่มจำนวนเหรียญ
+            CoinManager.Instance.AddCoins(value);
             SFXManager.Instance.PlayCoin();            // เล่นเสียงเก็บเหรียญ
             Destroy(gameObject);                       // ลบเหรียญ
         }

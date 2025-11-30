@@ -1,29 +1,25 @@
 ﻿using UnityEngine;
 
-public class PlayerController : Character
+public class PlayerController : MonoBehaviour
 {
     private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 16f;
+    [SerializeField] private float speed = 8f;
+    [SerializeField] private float jumpingPower = 16f;
     private bool isFacingRight = true;
 
-    public GameObject bombPrefab;
-    public Transform throwPoint; // จุดที่ปล่อยระเบิด
+    [SerializeField] private GameObject bombPrefab;
+    [SerializeField] private Transform throwPoint;
+
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
 
-    /*public override void Start()
-    {
-        base.Start();
-    }*/
-   
     private void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        
+
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
@@ -35,13 +31,6 @@ public class PlayerController : Character
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
 
-        if (IsGrounded() && animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
-        {
-            animator.ResetTrigger("Jump");
-            animator.Play("Idle");
-        }
-
-        // Attack
         if (Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("Attack");
@@ -50,19 +39,17 @@ public class PlayerController : Character
 
         Flip();
     }
-    public void ThrowBomb()   // ← สำคัญ ต้อง public ถึงจะให้อนิเมชันเรียกได้
-    {
-        GameObject bomb = Instantiate(bombPrefab, throwPoint.position, Quaternion.identity);
-
-        // หาทิศทางตามการหันหน้า
-        float dir = transform.localScale.x > 0 ? 1 : -1;
-        bomb.GetComponent<Bomb>().Launch(new Vector2(dir, 0));
-    }
-
 
     private void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+    }
+
+    private void ThrowBomb()
+    {
+        GameObject bomb = Instantiate(bombPrefab, throwPoint.position, Quaternion.identity);
+        float dir = transform.localScale.x > 0 ? 1 : -1;
+        bomb.GetComponent<Bomb>().Launch(new Vector2(dir, 0));
     }
 
     private bool IsGrounded()
@@ -75,9 +62,9 @@ public class PlayerController : Character
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1f;
+            transform.localScale = scale;
         }
     }
 }
